@@ -1,73 +1,90 @@
-from flask import Flask, render_template, request
-import nltk
-nltk.download('punkt')
-nltk.download('vader_lexicon')
-from nltk.tokenize import word_tokenize, RegexpTokenizer
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-import re
-import string
-analyzer = SentimentIntensityAnalyzer()
-app = Flask(__name__)
-
-def sentiment_analyzer_scores(text):
-    score = analyzer.polarity_scores(text)
-    print(text)
-    print(score)
-    return score
-
-"""def Analyse(sub):
-   tokenized_text = nltk.word_tokenize(sub)
-   pos_word_list=[]
-   neu_word_list=[]
-   neg_word_list=[]
+<!-- #######  THIS IS A COMMENT - Visible only in the source editor #########-->
+<head>
+   <style>
    
-   for word in tokenized_text:
-        if (analyzer.polarity_scores(word)['compound']) >= 0.1:
-            pos_word_list.append(word)
-        elif (analyzer.polarity_scores(word)['compound']) <= -0.1:
-            neg_word_list.append(word)
-        else:
-            neu_word_list.append(word)
-   print('Positive:',pos_word_list)        
-   print('Neutral:',neu_word_list)    
-   print('Negative:',neg_word_list)
-   return"""
-
-
-@app.route('/')
-def home():
-   print("inside home")
-   return render_template('landing_page.html')
-
-
-@app.route('/result',methods = ['POST'])
-def result():
-        if 'Home' in request.form:
-            return render_template('landing_page.html')
-        else:
-            print("inside result")
-            #if request.method == 'POST':
-            #   result = request.form
-            name_user = request.form['firstname']
-            analysis_text = request.form['subject']
-            analysis_score = sentiment_analyzer_scores(analysis_text)
-            print(name_user, analysis_text, analysis_score)
-            if analysis_score['compound'] >= 0.05:
-                print("Positive")
-                finalSentiment = "Positive"
-                image = "https://i.pinimg.com/originals/c0/1d/28/c01d28d4c27d214e5222413238b9bd89.jpg"
-            elif analysis_score['compound'] <= - 0.05:
-                print("Negative")
-                finalSentiment = "Negative"
-                image = "https://www.itweb.co.za/static/pictures/2018/10/resized/-fs-dislike-emoji-2018.xl.jpg"
-            else :
-                print("Neutral")
-                finalSentiment = "Neutral"
-                image = "https://static.turbosquid.com/Preview/2019/04/24__06_20_15/1_00000.png1047FE1C-DE30-498C-9DFB-2A51921BECFELarge-1.jpg"
-
-            my_list = [name_user, analysis_text, finalSentiment, image]
-            return render_template("result.html", data = my_list)
-      
-
-if __name__ == '__main__':
-   app.run(debug = True)
+   body{	background-image:url('/static/s2.jpg'); background-size: cover; background-position: center;}
+     /* Style inputs, select elements and textareas */
+   input[type=text], select, textarea{
+     width: 100%;
+     padding: 12px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     box-sizing: border-box;
+     resize: vertical;
+   }
+   
+   /* Style the label to display next to the inputs */
+   label {
+     padding: 12px 12px 12px 0;
+     display: inline-block;
+   }
+   
+   /* Style the submit button */
+   input[type=submit] {
+     background-color: #4CAF50;
+     color: white;
+     padding: 12px 20px;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+     float: left;
+   }
+   
+   /* Style the container */
+   .container {
+     border-radius: 5px;
+     background-color: #f2f2f2;
+     padding: 20px;
+   }
+   
+   /* Floating column for labels: 25% width */
+   .col-25 {
+     float: left;
+     width: 25%;
+     margin-top: 6px;
+   }
+   
+   /* Floating column for inputs: 75% width */
+   .col-75 {
+     float: left;
+     width: 75%;
+     margin-top: 6px;
+   }
+   
+   /* Clear floats after the columns */
+   .row:after {
+     content: "";
+     display: table;
+     clear: both;
+   }
+   
+   /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+   @media screen and (max-width: 600px) {
+     .col-25, .col-75, input[type=submit] {
+       width: 100%;
+       margin-top: 0;
+     }
+   }
+   </style>
+   </head>
+   <body>
+   <p>&nbsp;</p>
+   <p>&nbsp;</p>
+   <h1 style="text-align: center;"><span style="color: #ff0000;">Welcome to Online Sentiment Analysis !</span></h1>
+   <p style="font-size: 1.5em; text-align: center;"><span style="color: #00ccff;">We are leveraging the Flask framework in Python to create this.</span></p>
+   <p style="font-size: 1.5em; text-align: center;">&nbsp;</p>
+   <p style="font-size: 1.5em; text-align: center;">&nbsp;</p>
+   <p>&nbsp;</p>
+   <div class="container"><form action="http://localhost:5000/result" method ="POST">
+   <div class="row">
+   <div class="col-25"><label for="fname">Name</label></div>
+   <div class="col-75"><input id="fname" name="firstname" type="text" placeholder="Your name.." /></div>
+   </div>
+   <div class="row">
+   <div class="col-25"><label for="subject">Enter the Text for sentiment analysis</label></div>
+   <div class="col-75"><input id="subject" name="subject" type="text" placeholder="Your Text for Analysis" /></div>
+   </div>
+   </div>
+   <div class="row"><input type="submit" value="Submit" /></div>
+   </form>
+   </body>
