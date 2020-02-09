@@ -1,0 +1,63 @@
+<!doctype html>
+<head>
+<style>
+
+body{	background-image:url('/static/s1.jpg'); background-size: cover; background-position: center;}
+
+input[type=submit] {
+     background-color: #4CAF50;
+     color: white;
+     padding: 12px 20px;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+     float: left;
+   }
+   @media screen and (max-width: 600px) 
+   {
+     .col-25, .col-75, input[type=submit] 
+      {
+          width: 100%;
+         margin-top: 0;
+      }
+   }
+   
+</style>
+
+</head>
+<html>
+   <body>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p align="center">
+      <table width="1000" border = 5; align="center" style="width:100%;text-align:left;border-collapse:collapse;background-color:lightblue;">
+         
+         <tr style="background-color:yellowgreen;color:white;">
+            <th>Name</th>
+            <th>Text for Analysis</th>
+            <th>Overall Sentiment</th>
+            <th>Simplified Image</th>
+         </tr>
+            
+         
+         <tr>
+               <td>{{data[0]}}</td>
+               <td>{{data[1]}}</td>
+               <td>{{data[2]}}</td>
+               <td style="text-align: center;"><img src={{data[3]}} alt="Sentiment" height=500 width=500></img></td>
+         </tr>
+      </table>
+      
+      <form method="post">
+         
+         <div style="text-align:center">  
+            <input type="submit" value="Home" name="Home" style="margin-left: 50%"/>
+        </div> 
+         
+         
+         </div>
+      </form>
+      </p>
+   </body>
+</html>
